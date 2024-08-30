@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="author" content="Matthias Braun">
+
+		<title>reveal.js - Example</title>
+
+		<link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="./reveal.js/dist/theme/white.css" id="theme">
+
+        <link rel="stylesheet" href="./reveal.js/plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+                <section id="title-slide"
+                    data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                    data-background-opacity="0.5">
+
+                    <div style="text-align:left; width:85%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                        <h2 style="margin:50px">Introduction to Git and Git workflows</h2>
+                    </div>
+
+                </section>
+
+            </div>
+		</div>
+
+
+		<script src="./reveal.js/dist/reveal.js"></script>
+        <script src="./reveal.js/plugin/markdown/markdown.js"></script>
+        <script src="./reveal.js/plugin/highlight/highlight.js"></script>
+        <script src="./reveal.js/plugin/notes/notes.js"></script>
+        <script src="./reveal.js/plugin/math/math.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+
+		</script>
+
+	</body>
+</html>
