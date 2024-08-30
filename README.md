@@ -1,17 +1,13 @@
 # RSE 102 Workshop
 
+This is a temporary location for the modified slides and exercises of the Git part of the **[RSE 102 Workshop](https://github.com/RSE-102)**.
+
 ## Introduction to Git and Git Workflows
 
-### Slides
-
-[see](./slides/)
-
-### Exercises
-
-[see](./exercises/)
-
+- **[Slides](./slides/)**
+- **[Exercises](./exercises/)**
 
 ----
 ### License
 
-see license [file](LICENSE.txt).
+See the license [file](LICENSE.txt).
