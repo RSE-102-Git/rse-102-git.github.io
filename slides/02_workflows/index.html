@@ -1,0 +1,1402 @@
+<!--
+This is a template file, in which the revealjs-path has to be set.
+Use the convenience script at the top level of the repository for creating the
+website
+-->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <meta name="author" content="Bernd Flemisch">
+        <meta name="author" content="Dennis Gläser">
+        <title>Git Workflows</title>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <link rel="stylesheet" href="../../dist/reset.css">
+        <link rel="stylesheet" href="../../dist/reveal.css">
+        <link rel="stylesheet" href="../../dist/theme/custom_white.css">
+        <link rel="stylesheet" href="../../plugin/highlight/atom-one-light.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/@gitgraph/js"></script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+
+                <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                         data-background-opacity="0.5"
+                         id="title-slide">
+                    <div style="text-align:left; width:65%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                        <h2 style="margin:50px">Git workflows</h2>
+                    </div>
+                </section>
+
+                <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                         data-background-opacity="0.5">
+                     <div style="width:100%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                        <h2>Agenda</h2>
+                        <ul>
+                            <li>Overview over Git workflows</li>
+                            <li>Working with branches</li>
+                            <ul>
+                                <li>switching branches</li>
+                                <li>merging branches</li>
+                                <li>rebasing</li>
+                            </ul>
+                            <li>Keeping your history clean</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                             data-background-opacity="0.5">
+                        <div style="width:55%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                            <h2>Overview over Git workflows</h2>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in  fade-out">
+                        <h2>Centralized workflow</h2>
+                        <div id="central_wf"></div>
+                        <ul>
+                            <li class="fragment">Uses a single <strong>master</strong> branch</li>
+                            <li class="fragment">All commits are directly pushed to master</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Feature branch workflow</h2>
+                        <div id="feature-branch-workflow"></div>
+                        <ul>
+                            <li class="fragment">Each feature is developed on dedicated branch</li>
+                            <li class="fragment">When a feature is finished, it is merged into <strong>master</strong></li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Feature + release branch workflow</h2>
+                        <div id="feature-release-branch-workflow"></div>
+                        <ul>
+                            <li class="fragment">For each release, a branch is maintained</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Further workflows</h2>
+                        <ul>
+                            <li><a href="https://nvie.com/posts/a-successful-git-branching-model/">
+                                GitFlow
+                            </a></li>
+                            <li><a href="https://guides.github.com/introduction/flow/index.html">
+                                GitHub flow
+                            </a></li>
+                            <li><a href="https://docs.gitlab.com/ee/topics/gitlab_flow.html">
+                                GitLab flow
+                            </a></li>
+                            <li><a href="https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow">
+                                OneFlow
+                            </a></li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                             data-background-opacity="0.5">
+                        <div style="width:55%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                            <h2>Working with branches</h2>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <p>Let's consider the following project:</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ ls
+                            employee.py  test_employee.py
+                            ~/MyProject$ git log --oneline
+                            b41cb94 (HEAD -> master) test employee class
+                            59579ae add employee class
+                        </code></pre>
+
+                        <pre><code data-trim data-noescape data-line-numbers class="hljs python">
+                            # employee.py
+                            class Employee:
+                                def __init__(self, name: str, salary: float) -> None:
+                                    self.name_ = name
+                                    self.salary_ = salary
+                        </code></pre>
+
+                        <pre><code data-trim data-noescape data-line-numbers class="hljs python">
+                            # test_employee.py
+                            from employee import Employee
+
+                            def test_employee():
+                                employee = Employee(name="person", salary=5000.0)
+                                assert employee.name_ == "person"
+                                assert employee.salary_ == 5000.0
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <p>Now we want to change this to use the property decorator:</p>
+                        <pre><code data-trim data-noescape data-line-numbers="|4,5|7-13" class="hljs python">
+                            # employee.py
+                            class Employee:
+                                def __init__(self, name: str, salary: float) -> None:
+                                    self.__name = name
+                                    self.__salary = salary
+
+                                @property
+                                def name(self):
+                                    return self.__name
+
+                                @property
+                                def salary(self):
+                                    return self.__salary
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>... and we modify the test accordingly</p>
+                        <pre><code data-trim data-noescape data-line-numbers="|6,7" class="hljs python">
+                            # test_employee.py
+                            from employee import Employee
+
+                            def test_employee():
+                                employee = Employee(name="person", salary=5000)
+                                assert employee.name == "person"
+                                assert employee.salary == 5000.0
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Let's make a new branch for our upcoming commit...</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git switch --create feature/employee-property-decorator
+                            Switched to a new branch 'feature/employee-property-decorator'
+                            ~/MyProject$ # you now can switch to master and back
+                            ~/MyProject$ git switch master
+                            Switched to branch 'master'
+                            ~/MyProject$ git switch feature/employee-property-decorator
+                            Switched to branch 'feature/employee-property-decorator'
+                        </code></pre>
+                        <p class="fragment">
+                            <small>
+                                if your git version is below 2.23, you should use
+                                <code>git checkout</code> instead of
+                                <code>git switch</code> with
+                                <code>-b</code> instead of <code>--create</code>
+                            </small>
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>... and commit them</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ # modify the files to use property decorator ...
+                            ~/MyProject$ git commit -m "[employee] use property decorator" employee.py test_employee.py
+                            [feature/employee-property-decorator c82e370] [employee] use property decorator
+                             2 files changed, 12 insertions(+), 4 deletions(-)
+                             ~/MyProject$ git log --oneline
+                            c82e370 (HEAD -> feature/employee-property-decorator) [employee] use property decorator
+                            cbfde01 (master) test employee class
+                            15715ca add employee class
+                        </code></pre>
+                        <p class="fragment">
+                            We see now that <strong>HEAD</strong> points to our feature branch, which is one
+                            commit ahead of <strong>master</strong>
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p>Now let us merge the feature into master</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git switch master
+                            Switched to branch 'master'
+                            ~/MyProject$ git merge feature/employee-property-decorator
+                            Updating cbfde01..c82e370
+                            Fast-forward
+                             employee.py      | 12 ++++++++++--
+                             test_employee.py |  4 ++--
+                             2 files changed, 12 insertions(+), 4 deletions(-)
+                            ~/MyProject$ git log --oneline
+                            c82e370 (HEAD -> master, feature/employee-property-decorator) [employee] use property decorator
+                            cbfde01 test employee class
+                            15715ca add employee class
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p>Our feature is merged, let's delete the branch and look at the history as a graph</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git branch -d feature/employee-property-decorator
+                            Deleted branch feature/employee-property-decorator (was c82e370).
+                            ~/MyProject$ git log --all --decorate --oneline --graph
+                            * c82e370 (HEAD -> master) [employee] use property decorator
+                            * cbfde01 test employee class
+                            * 15715ca add employee class
+                        </code></pre>
+                        <p class="fragment">There is no trace left of our feature branch!</p>
+                        <p class="fragment">The reason is that Git did a fast-forward-merge</p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Fast-forward merge</h2>
+                        <img style="width:50%; box-shadow:none" src="../img/ffmerge.svg"></img>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <p>Let's try something else. But first, we have to revert the changes...</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git reset --soft cbfde01
+                            ~/MyProject$ git switch --create feature/employee-property-decorator
+                            Switched to a new branch 'feature/employee-property-decorator'
+                            ~/MyProject$ git commit -m "[employee] use property decorator"
+                            [feature/employee-property-decorator 7c537ab] [employee] use property decorator
+                             2 files changed, 12 insertions(+), 4 deletions(-)
+                            ~/MyProject$ git switch master
+                            Switched to branch 'master'
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>This time, we tell Git not to use fast-forward merge</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git merge --no-ff feature/employee-property-decorator
+                            Merge made by the 'recursive' strategy.
+                             employee.py      | 12 ++++++++++--
+                             test_employee.py |  4 ++--
+                             2 files changed, 12 insertions(+), 4 deletions(-)
+                            ~/MyProject$ git log --all --decorate --oneline --graph
+                            *   1a2acd5 (HEAD -> master) Merge branch 'feature/employee-property-decorator'
+                            |\
+                            | * 7c537ab (feature/employee-property-decorator) [employee] use property decorator
+                            |/
+                            * cbfde01 test employee class
+                            * 15715ca add employee class
+                        </code></pre>
+                        <p class="fragment">We can now still see that we developed the feature on a branch!</p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                        <p>... even if we delete the branch ...</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git branch -d feature/employee-property-decorator
+                            Deleted branch feature/employee-property-decorator (was 7c537ab).
+                            ~/MyProject$ git log --all --decorate --oneline --graph
+                            *   1a2acd5 (HEAD -> master) Merge branch 'feature/employee-property-decorator'
+                            |\
+                            | * 7c537ab [employee] use property decorator
+                            |/
+                            * cbfde01 test employee class
+                            * 15715ca add employee class
+                        </code></pre>
+                        <p class="fragment">
+                            With feature branches, a clearer git history
+                            can be achieved when using strategies that use 3-way-merges
+                        </p>
+                        <p class="fragment">
+                            3-way merges introduce merge commits that have 2 parents
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>3-way merge</h2>
+                        <img style="width:50%; box-shadow:none" src="../img/3wmerge.svg"></img>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Fast-forward vs. 3-way</h2>
+                        <ul>
+                            <li>Fast-forward not possible when branches have diverged (<strong>rebase</strong> required)</li>
+                            <li>3-way merges introduce merge commits, leaving traces of feature branches in history</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <h2>Quick summary</h2>
+                        <ul><small>
+                            <li>List available branches with <code style="color:#13ceef">git branch</code></li>
+                            <li>Change to another branch with <code style="color:#13ceef">git switch</code></li>
+                            <li>Change to a new branch with <code style="color:#13ceef">git switch --create</code></li>
+                            <li>Merge a branch into current one with <code style="color:#13ceef">git merge</code></li>
+                            <li>Merge avoiding fast-forwarding with <code style="color:#13ceef">git merge --no-ff</code></li>
+                        </small></ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>A few examples</h2>
+                        <p>Consider this helper script</p>
+                        <pre><code data-trim data-noescape class="hljs python">
+                            # setup_merge_example.py
+                            import os
+                            import subprocess
+                            from time import sleep
+
+                            def run(cmd: list):
+                                subprocess.run(cmd, check=True)
+
+                            def touch(filename: str):
+                                with open(filename, "w") as file:
+                                    file.write("")
+
+                            def commit(message: str):
+                                file = f"{message}.txt"
+                                touch(file)
+                                run(["git", "add", file])
+                                sleep(2)  # ensure the time stamps of commits are distinguishable
+                                run(["git", "commit", "-m", message, file])
+
+                            def switch_create(branch: str):
+                                run(["git", "switch", "--create", branch])
+
+                            def switch(branch: str):
+                                run(["git", "switch", branch])
+
+                            folder = "example"
+                            os.makedirs(folder)
+                            os.chdir(folder)
+                            run(["git", "init"])
+
+                            commit("A")
+
+                            switch_create("feature")
+                            commit("B")
+
+                            switch("master")
+                            commit("C")
+
+                            switch("feature")
+                            commit("D")
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Let's see the resulting graph</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~$ python3 setup_merge_example.py
+                            ~$ # output of switches & commits ...
+                            ~$ cd example
+                            ~/example$ git log --all --decorate --oneline --graph
+                            * 641744a (HEAD -> feature) D
+                            * 514dfd5 B
+                            | * 30f01bf (master) C
+                            |/
+                            * 9dc9b23 A
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Now, let us merge <strong>feature</strong> into <strong>master</strong></p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/example$ git switch master
+                            Switched to branch 'master'
+                            ~/example$ git merge feature
+                            Merge made by the 'recursive' strategy.
+                             B.txt | 0
+                             D.txt | 0
+                             2 files changed, 0 insertions(+), 0 deletions(-)
+                             create mode 100644 B.txt
+                             create mode 100644 D.txt
+                            ~/example$ git log --all --decorate --oneline --graph
+                            *   36046dd (HEAD -> master) Merge branch 'feature'
+                            |\
+                            | * 641744a (feature) D
+                            | * 514dfd5 B
+                            * | 30f01bf C
+                            |/
+                            * 9dc9b23 A
+                        </code></pre>
+                        <p class="fragment">
+                            Note that fast-forward was not possible
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>...and look at the <code>log</code></p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/example$ git branch -d feature
+                            Deleted branch feature (was 641744a).
+                            ~/example$ git log --oneline
+                            36046dd (HEAD -> master) Merge branch 'feature'
+                            641744a D
+                            30f01bf C
+                            514dfd5 B
+                            9dc9b23 A
+                        </code></pre>
+                        <p class="fragment">
+                            Note that master was <strong>A-C</strong> and is now <strong>A-B-C-D</strong>
+                        </p>
+                        <p class="fragment">
+                            The chronology of the commits is preserved
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <p>What if our commits modify an existing file?</p>
+                        <pre><code data-trim data-noescape data-line-numbers="16-30" class="hljs python">
+                            # setup_merge_example.py
+                            import os
+                            import subprocess
+                            from time import sleep
+
+
+                            def run(cmd: list):
+                                subprocess.run(cmd, check=True)
+
+
+                            def touch(filename: str):
+                                with open(filename, "w") as file:
+                                    file.write("")
+
+
+                            def append(text: str, filename: str):
+                                with open(filename, "a") as file:
+                                    file.write(text + '\n')
+
+
+                            def commit(message: str):
+                                file = "file.txt"
+                                if not os.path.exists(file):
+                                    touch(file)
+                                append(message, file)
+                                run(["git", "add", file])
+                                sleep(2)  # ensure the time stamps of commits are distinguishable
+                                run(["git", "commit", "-m", message, file])
+
+
+                            def switch_create(branch: str):
+                                run(["git", "switch", "--create", branch])
+
+
+                            def switch(branch: str):
+                                run(["git", "switch", branch])
+
+
+                            folder = "example"
+                            os.makedirs(folder)
+                            os.chdir(folder)
+                            run(["git", "init"])
+
+                            commit("A")
+
+                            switch_create("feature")
+                            commit("B")
+
+                            switch("master")
+                            commit("C")
+
+                            switch("feature")
+                            commit("D")
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>... we get the same graph</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~$ python3 setup_merge_example.py
+                            ~$ # output of switches & commits ...
+                            ~$ cd example
+                            ~/example$ git log --all --decorate --oneline --graph
+                            * da658c3 (HEAD -> feature) D
+                            * 0982f75 B
+                            | * 7942845 (master) C
+                            |/
+                            * c63ba94 A
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>... but, we get merge conflicts</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/example$ git switch master
+                            Switched to branch 'master'
+                            ~/example$ git merge feature
+                            Auto-merging file.txt
+                            CONFLICT (content): Merge conflict in file.txt
+                            Automatic merge failed; fix conflicts and then commit the result.
+                        </code></pre>
+                        <p class="fragment">
+                            We have modified the same lines of "file.txt" and Git cannot merge automatically
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p><code>git status</code> tells us which files are affected</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ git status
+                            On branch master
+                            You have unmerged paths.
+                              (fix conflicts and run "git commit")
+                              (use "git merge --abort" to abort the merge)
+
+                            Unmerged paths:
+                              (use "git add <file>..." to mark resolution)
+                                    both modified:   file.txt
+                        </script></code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>... and the file contains info on the unmerged changes</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            <<<<<<< HEAD
+                            C
+                            =======
+                            B
+                            D
+                            >>>>>>> feature
+                        </script></code></pre>
+                        <p class="fragment">
+                            Git finds "C" in HEAD, while "B" is found in the respective commit on <strong>feature</strong>
+                        </p>
+                        <p class="fragment">
+                            Now we manually have to bring the file into the state we want to have it
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>For instance, like this:</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            B
+                            C
+                            D
+                        </script></code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Now let us finish the merge</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/example$ git add file.txt
+                            ~/example$ git commit
+                            [master 93d3491] Merge branch 'feature'
+                            ~/example$ git branch -d feature
+                            Deleted branch feature (was da658c3)
+                            ~/example$ git log --oneline
+                            93d3491 (HEAD -> master) Merge branch 'feature'
+                            da658c3 D
+                            7942845 C
+                            0982f75 B
+                            c63ba94 A
+                        </code></pre>
+                        <p class="fragment">
+                            Note that the resulting history is the same, but there
+                            is an important difference...
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                        <p>Our merge commit now shows a diff reflecting our conflict resolution</p>
+                        <pre><code data-trim data-noescape class="hljs diff"><script type="text/template">
+                            ~/example$ git show --oneline 93d3491
+                            93d3491 (HEAD -> master) Merge branch 'feature'
+
+                            diff --cc file.txt
+                            index 8ec30d8,9150461..8422d40
+                            --- a/file.txt
+                            +++ b/file.txt
+                            @@@ -1,2 -1,3 +1,4 @@@
+                              A
+                            + B
+                             +C
+                            + D
+                        </script></code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                        <p>An alternative: <code>git rebase</code></p>
+                        <img src="https://gcapes.github.io/git-course/fig/git-rebase.svg"></img>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <p>Let's try this. First, we restore the example repo ...</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~$ rm -rf example
+                            ~$ python3 setup_merge_example.py
+                            ~$ # output of switches & commits ...
+                            ~$ cd example
+                            ~/example$ git log --all --decorate --oneline --graph
+                            * da658c3 (HEAD -> feature) D
+                            * 0982f75 B
+                            | * 7942845 (master) C
+                            |/
+                            * c63ba94 A
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Then, we rebase our feature branch onto master ...</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ git switch feature
+                            Already on 'feature'
+                            ~/example$ git rebase master
+                            First, rewinding head to replay your work on top of it...
+                            Applying: B
+                            Using index info to reconstruct a base tree...
+                            M       file.txt
+                            Falling back to patching base and 3-way merge...
+                            Auto-merging file.txt
+                            CONFLICT (content): Merge conflict in file.txt
+                            error: Failed to merge in the changes.
+                            Patch failed at 0001 B
+                            hint: Use 'git am --show-current-patch' to see the failed patch
+                            Resolve all conflicts manually, mark them as resolved with
+                            "git add/rm <conflicted_files>", then run "git rebase --continue".
+                            You can instead skip this commit: run "git rebase --skip".
+                            To abort and get back to the state before "git rebase", run "git rebase --abort".
+                        </script></code></pre>
+                        <p class="fragment">
+                            As before, git cannot automatically merge the changes...
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Let's have a look at the content of our file</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            <<<<<<< HEAD
+                            C
+                            =======
+                            B
+                            >>>>>>> B
+                        </script></code></pre>
+                        <p class="fragment">
+                            Note that "D" is not yet in here. Here, we are only resolving the conflict created in "B"!
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Let's fix the conflict and continue the rebase</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            B
+                            C
+                            ~/example$ git add file.txt
+                            ~/example$ git rebase --continue
+                            Applying: B
+                            Applying: D
+                            Using index info to reconstruct a base tree...
+                            M       file.txt
+                            Falling back to patching base and 3-way merge...
+                            Auto-merging file.txt
+                            CONFLICT (content): Merge conflict in file.txt
+                            error: Failed to merge in the changes.
+                            Patch failed at 0002 D
+                            hint: Use 'git am --show-current-patch' to see the failed patch
+                            Resolve all conflicts manually, mark them as resolved with
+                            "git add/rm <conflicted_files>", then run "git rebase --continue".
+                            You can instead skip this commit: run "git rebase --skip".
+                            To abort and get back to the state before "git rebase", run "git rebase --abort".
+                        </script></code></pre>
+                        <p class="fragment">
+                            Applying commit "D" now leads to another conflict...
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            B
+                            <<<<<<< HEAD
+                            C
+                            =======
+                            D
+                            >>>>>>> D
+                        </script></code></pre>
+                        <p class="fragment">
+                            Commit "D" added "D" at the end after "B", but now "B" is followed by "C"
+                        </p>
+                        <p class="fragment">
+                            If we had chosen <strong>A-C-B</strong> in the resolution before, Git would
+                            not have been running into a conflict here!
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>Let's fix this one, too, and finalize the rebase</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ cat file.txt
+                            A
+                            B
+                            C
+                            D
+                            ~/example$ git add file.txt
+                            ~/example$ git rebase --continue
+                            Applying: D
+                            ~/example$ git log --all --decorate --oneline --graph
+                            * e00c523 (HEAD -> feature) D
+                            * cd9532b B
+                            * 7e864d1 (master) C
+                            * 0cdfdd5 A
+                        </script></code></pre>
+                        <p class="fragment">
+                            Now there is a linear history from <strong>A-D</strong>
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>We can now merge the feature without conflicts...</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ git switch master
+                            Switched to branch 'master'
+                            ~/example$ git merge --no-ff feature
+                            Merge made by the 'recursive' strategy.
+                             file.txt | 2 ++
+                             1 file changed, 2 insertions(+)
+                            ~/example$ git log --all --decorate --oneline --graph
+                            *   4d733f4 (HEAD -> master) Merge branch 'feature'
+                            |\
+                            | * e00c523 (feature) D
+                            | * cd9532b B
+                            |/
+                            * 7e864d1 C
+                            * 0cdfdd5 A
+                        </script></code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <p>The result is a different history as before!</p>
+                        <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                            ~/example$ git log --oneline
+                            4d733f4 (HEAD -> master) Merge branch 'feature'
+                            e00c523 (feature) D
+                            cd9532b B
+                            7e864d1 C
+                            0cdfdd5 A
+                        </script></code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <div id="merge-no-ff" style="float:left; width:50%">
+                            <p>merge</p>
+                        </div>
+                        <div id="merge-rebase">
+                            <p>rebase + merge</p>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p><strong>Rebase</strong></p>
+                        <ul>
+                            <li>Conflicts may have to be resolved for each commit</li>
+                            <li>Rewrites history - new commits are made</li>
+                            <li>Leads to history sorted by feature</li>
+                            <li>Rebased branch has to be force-pushed</li>
+                            <li>Tests are guaranteed to pass after merge</li>
+                        </ul>
+                        <p><strong>Merge</strong></p>
+                        <ul>
+                            <li>Conflicts are resolved in a single commit</li>
+                            <li>History remains in original chronology</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p><strong>What if there are multiple features?</strong></p>
+                        <div id="merge-multiple-no-ff">
+                            <p>merge</p>
+                        </div>
+                        <div id="merge-multiple-rebase">
+                            <p>rebase + merge</p>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p><strong>GitLab allows you to enforce this workflow</strong></p>
+                        <img src="../img/gitlab_enforce_rebase.png"/>
+                    </section>
+
+                    <section data-background-image="../img/background.svg">
+                        <p><strong>A few things to consider when using workflows with feature branches</strong></p>
+                        <ul>
+                            <li>Is the chronology of the commits important?</li>
+                            <li>Would you like to have a history sorted by feature?</li>
+                            <li>Are feature branches typically used by several people?</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>Using rebase upon <code>git pull</code></h2>
+                        <p>Recall the problem of running out-of-sync with remote</p>
+                        <div class="r-stack">
+                            <img src="..../img/snapshots_local_vs_remote.svg"
+                                 style="box-shadow:none; background:transparent">
+                             <div class="fragment current-visible" data-fragment-index="0"
+                                  style="position: fixed; bottom: 5%; left: 25%">
+                                 <p>Initial state: clean repository</p>
+                             </div>
+                            <img class="fragment fade-in" data-fragment-index="1"
+                                 src="..../img/snapshots_local_vs_remote_new_commits.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <div class="fragment current-visible" data-fragment-index="1"
+                                 style="position: fixed; bottom: 5%; left: 25%">
+                                <p><code>git commit</code> local changes</p>
+                            </div>
+                            <img class="fragment fade-in" data-fragment-index="2"
+                                 src="..../img/snapshots_local_vs_remote_new_commits_fetch.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <div class="fragment fade-in" data-fragment-index="2"
+                                 style="position: fixed; bottom: 5%; left: 25%">
+                                <p><code>git fetch</code> remote changes</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Using rebase upon <code>git pull</code></h2>
+                        <p>Git suggests to use <code>git pull</code></p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/dumux$ git status
+                            On branch master
+                            Your branch and 'origin/master' have diverged,
+                            and have 2 and 1 different commits each, respectively.
+                              (use "git pull" to merge the remote branch into yours)
+                        </code></pre>
+                        <p class="fragment">
+                            This will create a merge commit on your local master branch!
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                        <h2>Using rebase upon <code>git pull</code></h2>
+                        <p>Alternative: <code>git pull --rebase</code></p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/dumux$ git pull --rebase origin master
+                            From REPO_URL
+                             * branch            master -> FETCH_HEAD
+                            First, rewinding head to replay your work on top of it...
+                            Applying: COMMIT_MSG1
+                            Applying: COMMIT_MSG2
+                        </code></pre>
+                        <p class="fragment">
+                            We see the output as for <strong>rebase</strong>: your commits are placed after
+                            those that are different on <strong>origin/master</strong>.
+                            This does not create a merge commit.
+                            <small>Note: <em>REPO_URL</em> and <em>COMMIT_MSG</em> are placeholders here</small>
+                        </p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>Using rebase upon <code>git pull</code></h2>
+                        <p>The result looks like this</p>
+                        <div class="r-stack">
+                            <img src="..../img/snapshots_local_vs_remote.svg"
+                                 style="box-shadow:none; background:transparent">
+                             <div class="fragment current-visible" data-fragment-index="0"
+                                  style="position: fixed; bottom: 5%; left: 25%">
+                                 <p>Initial state: clean repository</p>
+                             </div>
+                            <img class="fragment fade-in current-visible" data-fragment-index="1"
+                                 src="..../img/snapshots_local_vs_remote_new_commits.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <div class="fragment current-visible" data-fragment-index="1"
+                                 style="position: fixed; bottom: 5%; left: 25%">
+                                <p><code>git commit</code> local changes</p>
+                            </div>
+                            <img class="fragment fade-in current-visible" data-fragment-index="2"
+                                 src="..../img/snapshots_local_vs_remote_new_commits.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <img class="fragment fade-in" data-fragment-index="2"
+                                 src="..../img/snapshots_local_vs_remote_new_commits_fetch.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <div class="fragment fade-in current-visible" data-fragment-index="2"
+                                 style="position: fixed; bottom: 5%; left: 25%">
+                                <p><code>git fetch</code> remote changes</p>
+                            </div>
+                            <img class="fragment fade-in" data-fragment-index="3"
+                                 src="..../img/snapshots_local_vs_remote_new_commits_pull_rebase.svg"
+                                 style="box-shadow:none; background:transparent">
+                            <div class="fragment fade-in" data-fragment-index="3"
+                                 style="position: fixed; bottom: 5%; left: 25%">
+                                <p><code>git pull --rebase</code></p>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                             data-background-opacity="0.5">
+                        <div style="width:55%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                            <h2>Keeping your history clean</h2>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in slide-out">
+                        <h2>Signs of a clean history</h2>
+                        <ul>
+                            <li>Few fixup commits</li>
+                            <li>Descriptive commit messages</li>
+                            <li>On each commit, all tests pass</li>
+                            <li>One commit changes <strong>only one</strong> "thing"</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>Remove fixup commits</h2>
+                        <div class="fragment">
+                            <p>Before, we have seen how to use <code>git reset</code> to squash fixup commits:</p>
+                            <pre><code data-trim data-noescape class="hljs shell">
+                                ~/MyProject$ git log --oneline
+                                01de8c1 (HEAD -> master) fix typo
+                                cf365ce add some other Text
+                                fa642ee add some text
+                                b81e157 add title
+                                ~/MyProject$ git reset --soft fa642ee
+                                ~/MyProject$ git commit -m "add some other text"
+                                [master 4a4957f] add some other text
+                                 1 file changed, 1 insertion(+)
+                                ~/MyProject$ git log --oneline
+                                4a4957f (HEAD -> master) add some other text
+                                fa642ee add some text
+                                b81e157 add title
+                            </code></pre>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Remove fixup commits</h2>
+                        <div class="fragment">
+                            <p>
+                                Branches now allow you to do interactive rebasing to achieve this.
+                                Let's assume the following history:
+                            </p>
+                            <pre><code data-trim data-noescape class="hljs shell">
+                                ~/MyProject$ git log --all --decorate --oneline --graph
+                                * 79f7001 (HEAD -> feature/add-text) fix typo
+                                * 3a05e8f add some text
+                                * 560d8be (master) add title
+                            </code></pre>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Remove fixup commits</h2>
+                        <p><small>
+                            Interactive rebase can be started with the <code>(-i)</code> option:
+                        </small></p>
+                        <div class="fragment">
+                            <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
+                                ~/MyProject$ git rebase -i master
+                            </script></code></pre>
+                        </div>
+
+                        <p class="fragment"><small>This opens an editor with the following:</small></p>
+                        <div class="fragment">
+                            <pre><code data-trim data-noescape class="hljs bash"><script type="text/template">
+                                pick 3a05e8f add some text
+                                pick 79f7001 fix typo
+
+                                # Rebase 560d8be..79f7001 onto 560d8be (2 commands)
+                                #
+                                # Commands:
+                                # p, pick <commit> = use commit
+                                # r, reword <commit> = use commit, but edit the commit message
+                                # e, edit <commit> = use commit, but stop for amending
+                                # s, squash <commit> = use commit, but meld into previous commit
+                                # f, fixup <commit> = like "squash", but discard this commit's log message
+                                # x, exec <command> = run command (the rest of the line) using shell
+                                # b, break = stop here (continue rebase later with 'git rebase --continue')
+                                # d, drop <commit> = remove commit
+                                # l, label <label> = label current HEAD with a name
+                                # t, reset <label> = reset HEAD to a label
+                                # m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+                                # .       create a merge commit using the original merge commit's
+                                # .       message (or the oneline, if no original merge commit was
+                                # .       specified). Use -c <commit> to reword the commit message.
+                                #
+                                # These lines can be re-ordered; they are executed from top to bottom.
+                                #
+                                # If you remove a line here THAT COMMIT WILL BE LOST.
+                                #
+                                # However, if you remove everything, the rebase will be aborted.
+                                #
+                                # Note that empty commits are commented out
+                            </script></code></pre>
+                        </div>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Remove fixup commits</h2>
+                        <p><small>
+                            Let us choose <code>f</code> for "fixup":
+                        </small></p>
+                        <pre><code data-trim data-noescape class="hljs bash"><script type="text/template">
+                            pick 3a05e8f add some text
+                            f 79f7001 fix typo
+
+                            # Rebase 560d8be..79f7001 onto 560d8be (2 commands)
+                            #
+                            # Commands:
+                            # p, pick <commit> = use commit
+                            # r, reword <commit> = use commit, but edit the commit message
+                            # e, edit <commit> = use commit, but stop for amending
+                            # s, squash <commit> = use commit, but meld into previous commit
+                            # f, fixup <commit> = like "squash", but discard this commit's log message
+                            # x, exec <command> = run command (the rest of the line) using shell
+                            # b, break = stop here (continue rebase later with 'git rebase --continue')
+                            # d, drop <commit> = remove commit
+                            # l, label <label> = label current HEAD with a name
+                            # t, reset <label> = reset HEAD to a label
+                            # m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+                            # .       create a merge commit using the original merge commit's
+                            # .       message (or the oneline, if no original merge commit was
+                            # .       specified). Use -c <commit> to reword the commit message.
+                            #
+                            # These lines can be re-ordered; they are executed from top to bottom.
+                            #
+                            # If you remove a line here THAT COMMIT WILL BE LOST.
+                            #
+                            # However, if you remove everything, the rebase will be aborted.
+                            #
+                            # Note that empty commits are commented out
+                        </script></code></pre>
+                        <p class="fragment"><small>
+                            ... and then save and exit.
+                        </small></p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Remove fixup commits</h2>
+                        <p>The history is now stripped of the fixup commit, and the branch is ready to be merged</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git rebase -i master
+                            Successfully rebased and updated refs/heads/feature/add-text.
+                            ~/MyProject$ git log --all --decorate --oneline --graph
+                            * 00fe38e (HEAD -> feature/add-text) add some text
+                            * 560d8be (master) add title
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>Signs of a clean history</h2>
+                        <ul>
+                            <li style="opacity:0.5">Few fixup commits</li>
+                            <li style="opacity:0.5">Descriptive commit messages</li>
+                            <li>On each commit, all tests pass</li>
+                            <li style="opacity:0.5">One commit changes <strong>only one</strong> "thing"</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Tests should always pass</h2>
+                        <p>Assume we introduce the changes related to the employee class like this:</p>
+                        <pre><code data-trim data-noescape class="hljs shell">
+                            ~/MyProject$ git log --oneline
+                            1c2a935 (HEAD -> master) [test][employee] use employee property
+                            6e053ab [employee] use property decorator
+                            b41cb94 test employee class
+                            59579ae add employee class
+                        </code></pre>
+                        <p class="fragment"><small><strong>
+                            While 6e053ab and 1c2a935 may have a clear logical separation,
+                            this caused a commit on which the test failed!
+                        </strong></small></p>
+                        <p class="fragment"><small><strong>
+                            In this case, it is better to add both changes in one commit.
+                        </strong></small></p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                        <h2>Signs of a clean history</h2>
+                        <ul>
+                            <li style="opacity:0.5">Few fixup commits</li>
+                            <li style="opacity:0.5">Descriptive commit messages</li>
+                            <li style="opacity:0.5">On each commit, all tests pass</li>
+                            <li>One commit changes <strong>only one</strong> "thing"</li>
+                        </ul>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Commit only one thing</h2>
+                        <p>Consider these changes to the employee project:</p>
+                        <pre><code data-trim data-noescape data-line-numbers="|23-25,38-42" class="hljs diff">
+                            ~/MyProject$ git diff
+                            diff --git a/employee.py b/employee.py
+                            index 581fa6b..d74789e 100644
+                            --- a/employee.py
+                            +++ b/employee.py
+                            @@ -1,5 +1,17 @@
+
+                             class Employee:
+                                 def __init__(self, name: str, salary: float) -> None:
+                            -        self.name_ = name
+                            -        self.salary_ = salary
+                            +        self.__name = name
+                            +        self.__salary = salary
+                            +
+                            +    @property
+                            +    def name(self):
+                            +        return self.__name
+                            +
+                            +    @property
+                            +    def salary(self):
+                            +        return self.__salary
+                            +
+                            +    @name.setter
+                            +    def name(self, new_name: str):
+                            +        self.__name = new_name
+                            diff --git a/test_employee.py b/test_employee.py
+                            index adef316..004c1ab 100644
+                            --- a/test_employee.py
+                            +++ b/test_employee.py
+                            @@ -4,5 +4,8 @@ from employee import Employee
+
+                             def test_employee():
+                                 employee = Employee(name="person", salary=5000)
+                            -    assert employee.name_ == "person"
+                            -    assert employee.salary_ == 5000
+                            +    assert employee.name == "person"
+                            +    assert employee.salary == 5000
+                            +
+                            +    employee.name = "person2"
+                            +    assert employee.name == "person2"
+                        </code></pre>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                        <h2>Commit only one thing</h2>
+                        <p>These changes comprise the following:</p>
+                        <ul>
+                            <li>change the names of attributes of <strong>employee.py</strong></li>
+                            <li>export the attributes as properties with the decorator</li>
+                            <li>change the test to use the properties</li>
+                            <li>make the employee name settable</li>
+                            <li>test setting the employee name</li>
+                        </ul>
+                        <p class="fragment"><small>
+                            The last two changes could be in separate commits as for instance:<br>
+                            "[employee] make name property settable"<br>
+                            "[test][employee] add test for name property setter"
+                        </small></p>
+                    </section>
+
+                    <section data-background-image="../img/background.svg" data-transition="slide-in slide-out">
+                        <h2>Why the history matters</h2>
+                        <ul>
+                            <li class="fragment">Small commits are easier to review</li>
+                            <li class="fragment">Commits with non-cohesive changes are difficult to review</li>
+                            <li class="fragment">Descriptive messages reveal the steps of a feature implementation</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                             data-background-opacity="0.5">
+                         <div style="width:100%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                            <h2>Wrap-up I</h2>
+                            <ul>
+                                <li>list available branches <code style="color:#13ceef;">git branch</code></li>
+                                <li>change branches with <code style="color:#13ceef;">git switch</code></li>
+                                <li>create new branches with <code style="color:#13ceef;">--create</code></li>
+                                <li>merge branches with <code style="color:#13ceef;">git merge</code></li>
+                                <li>avoid fast-forward merges with <code style="color:#13ceef;">--no-ff</code></li>
+                                <li>rebase a branch with <code style="color:#13ceef;">git rebase</code></li>
+                                <li>rebase upon pull with <code style="color:#13ceef;">git pull --rebase</code></li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-background-image="https://github.githubassets.com/images/modules/site/social-cards/git-guides/git-commit.png"
+                             data-background-opacity="0.5">
+                         <div style="width:100%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
+                            <h2>Wrap-up II</h2>
+                            <ul>
+                                <li>there are multiple approaches for Git workflows</li>
+                                <li>choose the simplest possible flow for your project</li>
+                                <li>think about your desired history layout early</li>
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+
+
+        <script src="../../dist/reveal.js"></script>
+        <script src="../../plugin/notes/notes.js"></script>
+        <script src="../../plugin/markdown/markdown.js"></script>
+        <script src="../../plugin/highlight/highlight.js"></script>
+
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
+
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+            });
+        </script>
+
+        <script>  // gitgraph-js code for central workflow
+            graphContainer = document.getElementById("central_wf");
+            gitgraph = GitgraphJS.createGitgraph(
+              graphContainer, {orientation: "horizontal"}
+            );
+
+            master = gitgraph.branch("master");
+            master.commit().commit().commit().commit()
+        </script>
+
+        <script> // gitgraph-js code for feature workflow
+            graphContainer = document.getElementById("feature-branch-workflow");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer, {orientation: "horizontal"}
+            );
+
+            master = gitgraph.branch("master");
+            master.commit("Initial commit");
+
+            feature1 = master.branch("feature-1");
+            feature2 = master.branch("feature-2");
+
+            feature1.commit("Add feature 1");
+            feature2
+                .commit("Add feature 2")
+                .commit("Make feature 2 right")
+                .commit("Make feature 2 fast");
+            master.merge(feature2);
+
+            feature1.commit("Improve feature 1");
+            master.merge(feature1);
+
+            feature3 = master.branch("feature-3");
+            feature3.commit("Add feature 3");
+            feature3.commit("Improve feature 3");
+            master.merge(feature3);
+        </script>
+
+        <script> // gitgraph-js code for feature-branch workflow
+            graphContainer = document.getElementById("feature-release-branch-workflow");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer, {orientation: "horizontal"}
+            );
+
+            master = gitgraph.branch("master");
+            master.commit("Initial commit");
+
+            feature1 = master.branch("feature-1");
+            feature2 = master.branch("feature-2");
+
+            feature1.commit("Add feature 1");
+            feature2
+                .commit("Add feature 2")
+                .commit("Make feature 2 fast");
+            master.merge(feature2);
+
+            feature1.commit("Improve feature 1");
+            master.merge(feature1);
+
+            release = master.branch("release");
+
+            releaseFeature1 = master.branch("release-feature-1");
+            releaseFeature1.commit("Add required feature 1");
+            master.merge(releaseFeature1);
+            release.merge(releaseFeature1);
+
+            releaseFeature2 = master.branch("release-feature-2");
+            releaseFeature2.commit("Add required feature 2");
+            master.merge(releaseFeature2);
+            release.merge(releaseFeature2);
+
+            master.tag("v1");
+        </script>
+
+        <script>  // gitgraph-js code for no-fast-forward merge example
+            graphContainer = document.getElementById("merge-no-ff");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer,
+                { mode: "compact" }
+            );
+
+            master = gitgraph.branch("master");
+            master.commit({subject: "A", hash: "A", dotText: "A"});
+            feature = master.branch("feature");
+            feature.commit({subject: "B", hash: "B", dotText: "B"});
+            master.commit({subject: "C", hash: "C", dotText: "C"});
+            feature.commit({subject: "D", hash: "D", dotText: "D"});
+            master.merge(feature);
+        </script>
+
+        <script>  // gitgraph-js code for rebase example
+            graphContainer = document.getElementById("merge-rebase");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer,
+                { mode: "compact" }
+            );
+
+            master = gitgraph.branch("master");
+            master.commit({subject: "A", hash: "A", dotText: "A"});
+            master.commit({subject: "C", hash: "C", dotText: "C"});
+            feature = master.branch("feature");
+            feature.commit({subject: "B", hash: "B", dotText: "B*"});
+            feature.commit({subject: "D", hash: "D", dotText: "D*"});
+            master.merge(feature);
+        </script>
+
+        <script>  //gitgraph-js code for multiple no-fast-forward merges
+            graphContainer = document.getElementById("merge-multiple-no-ff");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer,
+                { orientation: "horizontal" }
+            );
+
+            master = gitgraph.branch("master");
+            master.commit();
+            feature1 = master.branch("feature1");
+            feature1.commit();
+            feature2 = master.branch("feature2");
+            feature2.commit();
+            feature1.commit();
+            master.merge(feature1);
+            feature2.commit();
+            master.merge(feature2);
+        </script>
+
+        <script>
+            graphContainer = document.getElementById("merge-multiple-no-ff");
+            gitgraph = GitgraphJS.createGitgraph(
+                graphContainer,
+                { orientation: "horizontal" }
+            );
+
+            master = gitgraph.branch("master");
+            master.commit();
+            feature1 = master.branch("feature1");
+            feature1.commit();
+            feature1.commit();
+            master.merge(feature1);
+            feature2 = master.branch("feature2");
+            feature2.commit();
+            feature2.commit();
+            master.merge(feature2);
+        </script>
+
+        <script>
+            graphContainer = document.getElementById("interactive-rebase-initial-status");
+            gitgraph = GitgraphJS.createGitgraph(graphContainer);
+
+            master = gitgraph.branch("master");
+            master.commit("add title");
+            feature1 = master.branch("feature/add-text");
+            feature1.commit("add some test");
+            feature1.commit("fix typo");
+        </script>
+
+    </body>
+</html>
