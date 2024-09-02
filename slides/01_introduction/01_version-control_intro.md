@@ -1,3 +1,4 @@
+<!--
 ---
 type: slide
 slideOptions:
@@ -22,6 +23,7 @@ slideOptions:
       color: orange;
     }
 </style>
+-->
 
 # Introduction to version control
 
