@@ -22,7 +22,7 @@ website
 
         <script src="https://cdn.jsdelivr.net/npm/@gitgraph/js"></script>
     </head>
-    
+
     <body>
         <div class="reveal">
             <div class="slides">
@@ -31,7 +31,7 @@ website
                          data-background-opacity="0.5"
                          id="title-slide">
                     <div style="text-align:left; width:65%; background-color:rgba(255,255,255,0.8); box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.85);">
-                        <h2 style="margin:50px">Git workflows</h2>
+                        <h2 style="margin:50px">Git Workflows</h2>
                     </div>
                 </section>
 
@@ -60,7 +60,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in  fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in  fade-out">
                         <h2>Centralized workflow</h2>
                         <div id="central_wf"></div>
                         <ul>
@@ -69,7 +69,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Feature branch workflow</h2>
                         <div id="feature-branch-workflow"></div>
                         <ul>
@@ -78,7 +78,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Feature + release branch workflow</h2>
                         <div id="feature-release-branch-workflow"></div>
                         <ul>
@@ -86,7 +86,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Further workflows</h2>
                         <ul>
                             <li><a href="https://nvie.com/posts/a-successful-git-branching-model/">
@@ -113,7 +113,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <p>Let's consider the following project:</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ ls
@@ -142,7 +142,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <p>Now we want to change this to use the property decorator:</p>
                         <pre><code data-trim data-noescape data-line-numbers="|4,5|7-13" class="hljs python">
                             # employee.py
@@ -161,7 +161,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... and we modify the test accordingly</p>
                         <pre><code data-trim data-noescape data-line-numbers="|6,7" class="hljs python">
                             # test_employee.py
@@ -174,7 +174,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Let's make a new branch for our upcoming commit...</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git switch --create feature/employee-property-decorator
@@ -195,7 +195,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... and commit them</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ # modify the files to use property decorator ...
@@ -213,7 +213,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p>Now let us merge the feature into master</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git switch master
@@ -231,7 +231,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p>Our feature is merged, let's delete the branch and look at the history as a graph</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git branch -d feature/employee-property-decorator
@@ -245,12 +245,12 @@ website
                         <p class="fragment">The reason is that Git did a fast-forward-merge</p>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Fast-forward merge</h2>
-                        <img style="width:50%; box-shadow:none" src="../img/ffmerge.svg"></img>
+                        <img style="width:50%; box-shadow:none" src="../../images/ffmerge.svg"></img>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <p>Let's try something else. But first, we have to revert the changes...</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git reset --soft cbfde01
@@ -264,7 +264,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>This time, we tell Git not to use fast-forward merge</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git merge --no-ff feature/employee-property-decorator
@@ -283,7 +283,7 @@ website
                         <p class="fragment">We can now still see that we developed the feature on a branch!</p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in slide-out">
                         <p>... even if we delete the branch ...</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git branch -d feature/employee-property-decorator
@@ -305,12 +305,12 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>3-way merge</h2>
-                        <img style="width:50%; box-shadow:none" src="../img/3wmerge.svg"></img>
+                        <img style="width:50%; box-shadow:none" src="../../images/3wmerge.svg"></img>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Fast-forward vs. 3-way</h2>
                         <ul>
                             <li>Fast-forward not possible when branches have diverged (<strong>rebase</strong> required)</li>
@@ -318,7 +318,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <h2>Quick summary</h2>
                         <ul><small>
                             <li>List available branches with <code style="color:#13ceef">git branch</code></li>
@@ -329,7 +329,7 @@ website
                         </small></ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>A few examples</h2>
                         <p>Consider this helper script</p>
                         <pre><code data-trim data-noescape class="hljs python">
@@ -376,7 +376,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Let's see the resulting graph</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~$ python3 setup_merge_example.py
@@ -391,7 +391,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Now, let us merge <strong>feature</strong> into <strong>master</strong></p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/example$ git switch master
@@ -417,7 +417,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>...and look at the <code>log</code></p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/example$ git branch -d feature
@@ -437,7 +437,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <p>What if our commits modify an existing file?</p>
                         <pre><code data-trim data-noescape data-line-numbers="16-30" class="hljs python">
                             # setup_merge_example.py
@@ -496,7 +496,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... we get the same graph</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~$ python3 setup_merge_example.py
@@ -511,7 +511,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... but, we get merge conflicts</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/example$ git switch master
@@ -526,7 +526,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p><code>git status</code> tells us which files are affected</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git status
@@ -541,7 +541,7 @@ website
                         </script></code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... and the file contains info on the unmerged changes</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
@@ -561,7 +561,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>For instance, like this:</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
@@ -572,7 +572,7 @@ website
                         </script></code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Now let us finish the merge</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/example$ git add file.txt
@@ -593,7 +593,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in slide-out">
                         <p>Our merge commit now shows a diff reflecting our conflict resolution</p>
                         <pre><code data-trim data-noescape class="hljs diff"><script type="text/template">
                             ~/example$ git show --oneline 93d3491
@@ -611,12 +611,12 @@ website
                         </script></code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in slide-out">
                         <p>An alternative: <code>git rebase</code></p>
                         <img src="https://gcapes.github.io/git-course/fig/git-rebase.svg"></img>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <p>Let's try this. First, we restore the example repo ...</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~$ rm -rf example
@@ -632,7 +632,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Then, we rebase our feature branch onto master ...</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git switch feature
@@ -658,7 +658,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Let's have a look at the content of our file</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
@@ -674,7 +674,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Let's fix the conflict and continue the rebase</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
@@ -703,7 +703,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
                             A
@@ -723,7 +723,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>Let's fix this one, too, and finalize the rebase</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ cat file.txt
@@ -745,7 +745,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>We can now merge the feature without conflicts...</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git switch master
@@ -765,7 +765,7 @@ website
                         </script></code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>The result is a different history as before!</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git log --oneline
@@ -777,7 +777,7 @@ website
                         </script></code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <div id="merge-no-ff" style="float:left; width:50%">
                             <p>merge</p>
                         </div>
@@ -786,7 +786,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p><strong>Rebase</strong></p>
                         <ul>
                             <li>Conflicts may have to be resolved for each commit</li>
@@ -802,7 +802,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p><strong>What if there are multiple features?</strong></p>
                         <div id="merge-multiple-no-ff">
                             <p>merge</p>
@@ -812,12 +812,12 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p><strong>GitLab allows you to enforce this workflow</strong></p>
-                        <img src="../img/gitlab_enforce_rebase.png"/>
+                        <img src="../../images/gitlab_enforce_rebase.png"/>
                     </section>
 
-                    <section data-background-image="../img/background.svg">
+                    <section data-background-image="../../images/background.svg">
                         <p><strong>A few things to consider when using workflows with feature branches</strong></p>
                         <ul>
                             <li>Is the chronology of the commits important?</li>
@@ -826,25 +826,25 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>Using rebase upon <code>git pull</code></h2>
                         <p>Recall the problem of running out-of-sync with remote</p>
                         <div class="r-stack">
-                            <img src="../img/snapshots_local_vs_remote.svg"
+                            <img src="../../images/snapshots_local_vs_remote.svg"
                                  style="box-shadow:none; background:transparent">
                              <div class="fragment current-visible" data-fragment-index="0"
                                   style="position: fixed; bottom: 5%; left: 25%">
                                  <p>Initial state: clean repository</p>
                              </div>
                             <img class="fragment fade-in" data-fragment-index="1"
-                                 src="../img/snapshots_local_vs_remote_new_commits.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits.svg"
                                  style="box-shadow:none; background:transparent">
                             <div class="fragment current-visible" data-fragment-index="1"
                                  style="position: fixed; bottom: 5%; left: 25%">
                                 <p><code>git commit</code> local changes</p>
                             </div>
                             <img class="fragment fade-in" data-fragment-index="2"
-                                 src="../img/snapshots_local_vs_remote_new_commits_fetch.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits_fetch.svg"
                                  style="box-shadow:none; background:transparent">
                             <div class="fragment fade-in" data-fragment-index="2"
                                  style="position: fixed; bottom: 5%; left: 25%">
@@ -853,7 +853,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Using rebase upon <code>git pull</code></h2>
                         <p>Git suggests to use <code>git pull</code></p>
                         <pre><code data-trim data-noescape class="hljs shell">
@@ -868,7 +868,7 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in slide-out">
                         <h2>Using rebase upon <code>git pull</code></h2>
                         <p>Alternative: <code>git pull --rebase</code></p>
                         <pre><code data-trim data-noescape class="hljs shell">
@@ -887,35 +887,35 @@ website
                         </p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>Using rebase upon <code>git pull</code></h2>
                         <p>The result looks like this</p>
                         <div class="r-stack">
-                            <img src="../img/snapshots_local_vs_remote.svg"
+                            <img src="../../images/snapshots_local_vs_remote.svg"
                                  style="box-shadow:none; background:transparent">
                              <div class="fragment current-visible" data-fragment-index="0"
                                   style="position: fixed; bottom: 5%; left: 25%">
                                  <p>Initial state: clean repository</p>
                              </div>
                             <img class="fragment fade-in current-visible" data-fragment-index="1"
-                                 src="../img/snapshots_local_vs_remote_new_commits.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits.svg"
                                  style="box-shadow:none; background:transparent">
                             <div class="fragment current-visible" data-fragment-index="1"
                                  style="position: fixed; bottom: 5%; left: 25%">
                                 <p><code>git commit</code> local changes</p>
                             </div>
                             <img class="fragment fade-in current-visible" data-fragment-index="2"
-                                 src="../img/snapshots_local_vs_remote_new_commits.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits.svg"
                                  style="box-shadow:none; background:transparent">
                             <img class="fragment fade-in" data-fragment-index="2"
-                                 src="../img/snapshots_local_vs_remote_new_commits_fetch.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits_fetch.svg"
                                  style="box-shadow:none; background:transparent">
                             <div class="fragment fade-in current-visible" data-fragment-index="2"
                                  style="position: fixed; bottom: 5%; left: 25%">
                                 <p><code>git fetch</code> remote changes</p>
                             </div>
                             <img class="fragment fade-in" data-fragment-index="3"
-                                 src="../img/snapshots_local_vs_remote_new_commits_pull_rebase.svg"
+                                 src="../../images/snapshots_local_vs_remote_new_commits_pull_rebase.svg"
                                  style="box-shadow:none; background:transparent">
                             <div class="fragment fade-in" data-fragment-index="3"
                                  style="position: fixed; bottom: 5%; left: 25%">
@@ -933,7 +933,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in slide-out">
                         <h2>Signs of a clean history</h2>
                         <ul>
                             <li>Few fixup commits</li>
@@ -943,7 +943,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>Remove fixup commits</h2>
                         <div class="fragment">
                             <p>Before, we have seen how to use <code>git reset</code> to squash fixup commits:</p>
@@ -965,7 +965,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Remove fixup commits</h2>
                         <div class="fragment">
                             <p>
@@ -981,7 +981,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Remove fixup commits</h2>
                         <p><small>
                             Interactive rebase can be started with the <code>(-i)</code> option:
@@ -1027,7 +1027,7 @@ website
                         </div>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Remove fixup commits</h2>
                         <p><small>
                             Let us choose <code>f</code> for "fixup":
@@ -1067,7 +1067,7 @@ website
                         </small></p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Remove fixup commits</h2>
                         <p>The history is now stripped of the fixup commit, and the branch is ready to be merged</p>
                         <pre><code data-trim data-noescape class="hljs shell">
@@ -1079,7 +1079,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>Signs of a clean history</h2>
                         <ul>
                             <li style="opacity:0.5">Few fixup commits</li>
@@ -1089,7 +1089,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Tests should always pass</h2>
                         <p>Assume we introduce the changes related to the employee class like this:</p>
                         <pre><code data-trim data-noescape class="hljs shell">
@@ -1108,7 +1108,7 @@ website
                         </strong></small></p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in fade-out">
                         <h2>Signs of a clean history</h2>
                         <ul>
                             <li style="opacity:0.5">Few fixup commits</li>
@@ -1118,7 +1118,7 @@ website
                         </ul>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Commit only one thing</h2>
                         <p>Consider these changes to the employee project:</p>
                         <pre><code data-trim data-noescape data-line-numbers="|23-25,38-42" class="hljs diff">
@@ -1165,7 +1165,7 @@ website
                         </code></pre>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="fade-in fade-out">
+                    <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <h2>Commit only one thing</h2>
                         <p>These changes comprise the following:</p>
                         <ul>
@@ -1182,7 +1182,7 @@ website
                         </small></p>
                     </section>
 
-                    <section data-background-image="../img/background.svg" data-transition="slide-in slide-out">
+                    <section data-background-image="../../images/background.svg" data-transition="slide-in slide-out">
                         <h2>Why the history matters</h2>
                         <ul>
                             <li class="fragment">Small commits are easier to review</li>
