@@ -43,9 +43,9 @@ website
                             <li>Overview over Git workflows</li>
                             <li>Working with branches</li>
                             <ul>
-                                <li>switching branches</li>
-                                <li>merging branches</li>
-                                <li>rebasing</li>
+                                <li>Switching branches</li>
+                                <li>Merging branches</li>
+                                <li>Rebasing</li>
                             </ul>
                             <li>Keeping your history clean</li>
                         </ul>
@@ -64,8 +64,8 @@ website
                         <h2>Centralized workflow</h2>
                         <div id="central_wf"></div>
                         <ul>
-                            <li class="fragment">Uses a single <strong>master</strong> branch</li>
-                            <li class="fragment">All commits are directly pushed to master</li>
+                            <li class="fragment">Uses a single <strong>main</strong> branch</li>
+                            <li class="fragment">All commits are directly pushed to main</li>
                         </ul>
                     </section>
 
@@ -74,7 +74,7 @@ website
                         <div id="feature-branch-workflow"></div>
                         <ul>
                             <li class="fragment">Each feature is developed on dedicated branch</li>
-                            <li class="fragment">When a feature is finished, it is merged into <strong>master</strong></li>
+                            <li class="fragment">When a feature is finished, it is merged into <strong>main</strong></li>
                         </ul>
                     </section>
 
@@ -119,7 +119,7 @@ website
                             ~/MyProject$ ls
                             employee.py  test_employee.py
                             ~/MyProject$ git log --oneline
-                            b41cb94 (HEAD -> master) test employee class
+                            b41cb94 (HEAD -> main) test employee class
                             59579ae add employee class
                         </code></pre>
 
@@ -179,9 +179,9 @@ website
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git switch --create feature/employee-property-decorator
                             Switched to a new branch 'feature/employee-property-decorator'
-                            ~/MyProject$ # you now can switch to master and back
-                            ~/MyProject$ git switch master
-                            Switched to branch 'master'
+                            ~/MyProject$ # you now can switch to main and back
+                            ~/MyProject$ git switch main
+                            Switched to branch 'main'
                             ~/MyProject$ git switch feature/employee-property-decorator
                             Switched to branch 'feature/employee-property-decorator'
                         </code></pre>
@@ -204,20 +204,20 @@ website
                              2 files changed, 12 insertions(+), 4 deletions(-)
                              ~/MyProject$ git log --oneline
                             c82e370 (HEAD -> feature/employee-property-decorator) [employee] use property decorator
-                            cbfde01 (master) test employee class
+                            cbfde01 (main) test employee class
                             15715ca add employee class
                         </code></pre>
                         <p class="fragment">
                             We see now that <strong>HEAD</strong> points to our feature branch, which is one
-                            commit ahead of <strong>master</strong>
+                            commit ahead of <strong>main</strong>
                         </p>
                     </section>
 
                     <section data-background-image="../../images/background.svg">
-                        <p>Now let us merge the feature into master</p>
+                        <p>Now let us merge the feature into main</p>
                         <pre><code data-trim data-noescape class="hljs shell">
-                            ~/MyProject$ git switch master
-                            Switched to branch 'master'
+                            ~/MyProject$ git switch main
+                            Switched to branch 'main'
                             ~/MyProject$ git merge feature/employee-property-decorator
                             Updating cbfde01..c82e370
                             Fast-forward
@@ -225,7 +225,7 @@ website
                              test_employee.py |  4 ++--
                              2 files changed, 12 insertions(+), 4 deletions(-)
                             ~/MyProject$ git log --oneline
-                            c82e370 (HEAD -> master, feature/employee-property-decorator) [employee] use property decorator
+                            c82e370 (HEAD -> main, feature/employee-property-decorator) [employee] use property decorator
                             cbfde01 test employee class
                             15715ca add employee class
                         </code></pre>
@@ -237,7 +237,7 @@ website
                             ~/MyProject$ git branch -d feature/employee-property-decorator
                             Deleted branch feature/employee-property-decorator (was c82e370).
                             ~/MyProject$ git log --all --decorate --oneline --graph
-                            * c82e370 (HEAD -> master) [employee] use property decorator
+                            * c82e370 (HEAD -> main) [employee] use property decorator
                             * cbfde01 test employee class
                             * 15715ca add employee class
                         </code></pre>
@@ -259,8 +259,8 @@ website
                             ~/MyProject$ git commit -m "[employee] use property decorator"
                             [feature/employee-property-decorator 7c537ab] [employee] use property decorator
                              2 files changed, 12 insertions(+), 4 deletions(-)
-                            ~/MyProject$ git switch master
-                            Switched to branch 'master'
+                            ~/MyProject$ git switch main
+                            Switched to branch 'main'
                         </code></pre>
                     </section>
 
@@ -273,7 +273,7 @@ website
                              test_employee.py |  4 ++--
                              2 files changed, 12 insertions(+), 4 deletions(-)
                             ~/MyProject$ git log --all --decorate --oneline --graph
-                            *   1a2acd5 (HEAD -> master) Merge branch 'feature/employee-property-decorator'
+                            *   1a2acd5 (HEAD -> main) Merge branch 'feature/employee-property-decorator'
                             |\
                             | * 7c537ab (feature/employee-property-decorator) [employee] use property decorator
                             |/
@@ -289,7 +289,7 @@ website
                             ~/MyProject$ git branch -d feature/employee-property-decorator
                             Deleted branch feature/employee-property-decorator (was 7c537ab).
                             ~/MyProject$ git log --all --decorate --oneline --graph
-                            *   1a2acd5 (HEAD -> master) Merge branch 'feature/employee-property-decorator'
+                            *   1a2acd5 (HEAD -> main) Merge branch 'feature/employee-property-decorator'
                             |\
                             | * 7c537ab [employee] use property decorator
                             |/
@@ -368,7 +368,7 @@ website
                             switch_create("feature")
                             commit("B")
 
-                            switch("master")
+                            switch("main")
                             commit("C")
 
                             switch("feature")
@@ -385,17 +385,17 @@ website
                             ~/example$ git log --all --decorate --oneline --graph
                             * 641744a (HEAD -> feature) D
                             * 514dfd5 B
-                            | * 30f01bf (master) C
+                            | * 30f01bf (main) C
                             |/
                             * 9dc9b23 A
                         </code></pre>
                     </section>
 
                     <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
-                        <p>Now, let us merge <strong>feature</strong> into <strong>master</strong></p>
+                        <p>Now, let us merge <strong>feature</strong> into <strong>main</strong></p>
                         <pre><code data-trim data-noescape class="hljs shell">
-                            ~/example$ git switch master
-                            Switched to branch 'master'
+                            ~/example$ git switch main
+                            Switched to branch 'main'
                             ~/example$ git merge feature
                             Merge made by the 'recursive' strategy.
                              B.txt | 0
@@ -404,7 +404,7 @@ website
                              create mode 100644 B.txt
                              create mode 100644 D.txt
                             ~/example$ git log --all --decorate --oneline --graph
-                            *   36046dd (HEAD -> master) Merge branch 'feature'
+                            *   36046dd (HEAD -> main) Merge branch 'feature'
                             |\
                             | * 641744a (feature) D
                             | * 514dfd5 B
@@ -423,14 +423,14 @@ website
                             ~/example$ git branch -d feature
                             Deleted branch feature (was 641744a).
                             ~/example$ git log --oneline
-                            36046dd (HEAD -> master) Merge branch 'feature'
+                            36046dd (HEAD -> main) Merge branch 'feature'
                             641744a D
                             30f01bf C
                             514dfd5 B
                             9dc9b23 A
                         </code></pre>
                         <p class="fragment">
-                            Note that master was <strong>A-C</strong> and is now <strong>A-B-C-D</strong>
+                            Note that main was <strong>A-C</strong> and is now <strong>A-B-C-D</strong>
                         </p>
                         <p class="fragment">
                             The chronology of the commits is preserved
@@ -488,7 +488,7 @@ website
                             switch_create("feature")
                             commit("B")
 
-                            switch("master")
+                            switch("main")
                             commit("C")
 
                             switch("feature")
@@ -505,7 +505,7 @@ website
                             ~/example$ git log --all --decorate --oneline --graph
                             * da658c3 (HEAD -> feature) D
                             * 0982f75 B
-                            | * 7942845 (master) C
+                            | * 7942845 (main) C
                             |/
                             * c63ba94 A
                         </code></pre>
@@ -514,8 +514,8 @@ website
                     <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>... but, we get merge conflicts</p>
                         <pre><code data-trim data-noescape class="hljs shell">
-                            ~/example$ git switch master
-                            Switched to branch 'master'
+                            ~/example$ git switch main
+                            Switched to branch 'main'
                             ~/example$ git merge feature
                             Auto-merging file.txt
                             CONFLICT (content): Merge conflict in file.txt
@@ -530,7 +530,7 @@ website
                         <p><code>git status</code> tells us which files are affected</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git status
-                            On branch master
+                            On branch main
                             You have unmerged paths.
                               (fix conflicts and run "git commit")
                               (use "git merge --abort" to abort the merge)
@@ -577,11 +577,11 @@ website
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/example$ git add file.txt
                             ~/example$ git commit
-                            [master 93d3491] Merge branch 'feature'
+                            [main 93d3491] Merge branch 'feature'
                             ~/example$ git branch -d feature
                             Deleted branch feature (was da658c3)
                             ~/example$ git log --oneline
-                            93d3491 (HEAD -> master) Merge branch 'feature'
+                            93d3491 (HEAD -> main) Merge branch 'feature'
                             da658c3 D
                             7942845 C
                             0982f75 B
@@ -597,7 +597,7 @@ website
                         <p>Our merge commit now shows a diff reflecting our conflict resolution</p>
                         <pre><code data-trim data-noescape class="hljs diff"><script type="text/template">
                             ~/example$ git show --oneline 93d3491
-                            93d3491 (HEAD -> master) Merge branch 'feature'
+                            93d3491 (HEAD -> main) Merge branch 'feature'
 
                             diff --cc file.txt
                             index 8ec30d8,9150461..8422d40
@@ -626,18 +626,18 @@ website
                             ~/example$ git log --all --decorate --oneline --graph
                             * da658c3 (HEAD -> feature) D
                             * 0982f75 B
-                            | * 7942845 (master) C
+                            | * 7942845 (main) C
                             |/
                             * c63ba94 A
                         </code></pre>
                     </section>
 
                     <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
-                        <p>Then, we rebase our feature branch onto master ...</p>
+                        <p>Then, we rebase our feature branch onto main ...</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git switch feature
                             Already on 'feature'
-                            ~/example$ git rebase master
+                            ~/example$ git rebase main
                             First, rewinding head to replay your work on top of it...
                             Applying: B
                             Using index info to reconstruct a base tree...
@@ -737,7 +737,7 @@ website
                             ~/example$ git log --all --decorate --oneline --graph
                             * e00c523 (HEAD -> feature) D
                             * cd9532b B
-                            * 7e864d1 (master) C
+                            * 7e864d1 (main) C
                             * 0cdfdd5 A
                         </script></code></pre>
                         <p class="fragment">
@@ -748,14 +748,14 @@ website
                     <section data-background-image="../../images/background.svg" data-transition="fade-in fade-out">
                         <p>We can now merge the feature without conflicts...</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
-                            ~/example$ git switch master
-                            Switched to branch 'master'
+                            ~/example$ git switch main
+                            Switched to branch 'main'
                             ~/example$ git merge --no-ff feature
                             Merge made by the 'recursive' strategy.
                              file.txt | 2 ++
                              1 file changed, 2 insertions(+)
                             ~/example$ git log --all --decorate --oneline --graph
-                            *   4d733f4 (HEAD -> master) Merge branch 'feature'
+                            *   4d733f4 (HEAD -> main) Merge branch 'feature'
                             |\
                             | * e00c523 (feature) D
                             | * cd9532b B
@@ -769,7 +769,7 @@ website
                         <p>The result is a different history as before!</p>
                         <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
                             ~/example$ git log --oneline
-                            4d733f4 (HEAD -> master) Merge branch 'feature'
+                            4d733f4 (HEAD -> main) Merge branch 'feature'
                             e00c523 (feature) D
                             cd9532b B
                             7e864d1 C
@@ -858,13 +858,13 @@ website
                         <p>Git suggests to use <code>git pull</code></p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/dumux$ git status
-                            On branch master
-                            Your branch and 'origin/master' have diverged,
+                            On branch main
+                            Your branch and 'origin/main' have diverged,
                             and have 2 and 1 different commits each, respectively.
                               (use "git pull" to merge the remote branch into yours)
                         </code></pre>
                         <p class="fragment">
-                            This will create a merge commit on your local master branch!
+                            This will create a merge commit on your local main branch!
                         </p>
                     </section>
 
@@ -872,16 +872,16 @@ website
                         <h2>Using rebase upon <code>git pull</code></h2>
                         <p>Alternative: <code>git pull --rebase</code></p>
                         <pre><code data-trim data-noescape class="hljs shell">
-                            ~/dumux$ git pull --rebase origin master
+                            ~/dumux$ git pull --rebase origin main
                             From REPO_URL
-                             * branch            master -> FETCH_HEAD
+                             * branch            main -> FETCH_HEAD
                             First, rewinding head to replay your work on top of it...
                             Applying: COMMIT_MSG1
                             Applying: COMMIT_MSG2
                         </code></pre>
                         <p class="fragment">
                             We see the output as for <strong>rebase</strong>: your commits are placed after
-                            those that are different on <strong>origin/master</strong>.
+                            those that are different on <strong>origin/main</strong>.
                             This does not create a merge commit.
                             <small>Note: <em>REPO_URL</em> and <em>COMMIT_MSG</em> are placeholders here</small>
                         </p>
@@ -949,16 +949,16 @@ website
                             <p>Before, we have seen how to use <code>git reset</code> to squash fixup commits:</p>
                             <pre><code data-trim data-noescape class="hljs shell">
                                 ~/MyProject$ git log --oneline
-                                01de8c1 (HEAD -> master) fix typo
+                                01de8c1 (HEAD -> main) fix typo
                                 cf365ce add some other Text
                                 fa642ee add some text
                                 b81e157 add title
                                 ~/MyProject$ git reset --soft fa642ee
                                 ~/MyProject$ git commit -m "add some other text"
-                                [master 4a4957f] add some other text
+                                [main 4a4957f] add some other text
                                  1 file changed, 1 insertion(+)
                                 ~/MyProject$ git log --oneline
-                                4a4957f (HEAD -> master) add some other text
+                                4a4957f (HEAD -> main) add some other text
                                 fa642ee add some text
                                 b81e157 add title
                             </code></pre>
@@ -976,7 +976,7 @@ website
                                 ~/MyProject$ git log --all --decorate --oneline --graph
                                 * 79f7001 (HEAD -> feature/add-text) fix typo
                                 * 3a05e8f add some text
-                                * 560d8be (master) add title
+                                * 560d8be (main) add title
                             </code></pre>
                         </div>
                     </section>
@@ -988,7 +988,7 @@ website
                         </small></p>
                         <div class="fragment">
                             <pre><code data-trim data-noescape class="hljs shell"><script type="text/template">
-                                ~/MyProject$ git rebase -i master
+                                ~/MyProject$ git rebase -i main
                             </script></code></pre>
                         </div>
 
@@ -1071,11 +1071,11 @@ website
                         <h2>Remove fixup commits</h2>
                         <p>The history is now stripped of the fixup commit, and the branch is ready to be merged</p>
                         <pre><code data-trim data-noescape class="hljs shell">
-                            ~/MyProject$ git rebase -i master
+                            ~/MyProject$ git rebase -i main
                             Successfully rebased and updated refs/heads/feature/add-text.
                             ~/MyProject$ git log --all --decorate --oneline --graph
                             * 00fe38e (HEAD -> feature/add-text) add some text
-                            * 560d8be (master) add title
+                            * 560d8be (main) add title
                         </code></pre>
                     </section>
 
@@ -1094,7 +1094,7 @@ website
                         <p>Assume we introduce the changes related to the employee class like this:</p>
                         <pre><code data-trim data-noescape class="hljs shell">
                             ~/MyProject$ git log --oneline
-                            1c2a935 (HEAD -> master) [test][employee] use employee property
+                            1c2a935 (HEAD -> main) [test][employee] use employee property
                             6e053ab [employee] use property decorator
                             b41cb94 test employee class
                             59579ae add employee class
@@ -1250,8 +1250,8 @@ website
               graphContainer, {orientation: "horizontal"}
             );
 
-            master = gitgraph.branch("master");
-            master.commit().commit().commit().commit()
+            main = gitgraph.branch("main");
+            main.commit().commit().commit().commit()
         </script>
 
         <script> // gitgraph-js code for feature workflow
@@ -1260,26 +1260,26 @@ website
                 graphContainer, {orientation: "horizontal"}
             );
 
-            master = gitgraph.branch("master");
-            master.commit("Initial commit");
+            main = gitgraph.branch("main");
+            main.commit("Initial commit");
 
-            feature1 = master.branch("feature-1");
-            feature2 = master.branch("feature-2");
+            feature1 = main.branch("feature-1");
+            feature2 = main.branch("feature-2");
 
             feature1.commit("Add feature 1");
             feature2
                 .commit("Add feature 2")
                 .commit("Make feature 2 right")
                 .commit("Make feature 2 fast");
-            master.merge(feature2);
+            main.merge(feature2);
 
             feature1.commit("Improve feature 1");
-            master.merge(feature1);
+            main.merge(feature1);
 
-            feature3 = master.branch("feature-3");
+            feature3 = main.branch("feature-3");
             feature3.commit("Add feature 3");
             feature3.commit("Improve feature 3");
-            master.merge(feature3);
+            main.merge(feature3);
         </script>
 
         <script> // gitgraph-js code for feature-branch workflow
@@ -1288,34 +1288,34 @@ website
                 graphContainer, {orientation: "horizontal"}
             );
 
-            master = gitgraph.branch("master");
-            master.commit("Initial commit");
+            main = gitgraph.branch("main");
+            main.commit("Initial commit");
 
-            feature1 = master.branch("feature-1");
-            feature2 = master.branch("feature-2");
+            feature1 = main.branch("feature-1");
+            feature2 = main.branch("feature-2");
 
             feature1.commit("Add feature 1");
             feature2
                 .commit("Add feature 2")
                 .commit("Make feature 2 fast");
-            master.merge(feature2);
+            main.merge(feature2);
 
             feature1.commit("Improve feature 1");
-            master.merge(feature1);
+            main.merge(feature1);
 
-            release = master.branch("release");
+            release = main.branch("release");
 
-            releaseFeature1 = master.branch("release-feature-1");
+            releaseFeature1 = main.branch("release-feature-1");
             releaseFeature1.commit("Add required feature 1");
-            master.merge(releaseFeature1);
+            main.merge(releaseFeature1);
             release.merge(releaseFeature1);
 
-            releaseFeature2 = master.branch("release-feature-2");
+            releaseFeature2 = main.branch("release-feature-2");
             releaseFeature2.commit("Add required feature 2");
-            master.merge(releaseFeature2);
+            main.merge(releaseFeature2);
             release.merge(releaseFeature2);
 
-            master.tag("v1");
+            main.tag("v1");
         </script>
 
         <script>  // gitgraph-js code for no-fast-forward merge example
@@ -1325,13 +1325,13 @@ website
                 { mode: "compact" }
             );
 
-            master = gitgraph.branch("master");
-            master.commit({subject: "A", hash: "A", dotText: "A"});
-            feature = master.branch("feature");
+            main = gitgraph.branch("main");
+            main.commit({subject: "A", hash: "A", dotText: "A"});
+            feature = main.branch("feature");
             feature.commit({subject: "B", hash: "B", dotText: "B"});
-            master.commit({subject: "C", hash: "C", dotText: "C"});
+            main.commit({subject: "C", hash: "C", dotText: "C"});
             feature.commit({subject: "D", hash: "D", dotText: "D"});
-            master.merge(feature);
+            main.merge(feature);
         </script>
 
         <script>  // gitgraph-js code for rebase example
@@ -1341,13 +1341,13 @@ website
                 { mode: "compact" }
             );
 
-            master = gitgraph.branch("master");
-            master.commit({subject: "A", hash: "A", dotText: "A"});
-            master.commit({subject: "C", hash: "C", dotText: "C"});
-            feature = master.branch("feature");
+            main = gitgraph.branch("main");
+            main.commit({subject: "A", hash: "A", dotText: "A"});
+            main.commit({subject: "C", hash: "C", dotText: "C"});
+            feature = main.branch("feature");
             feature.commit({subject: "B", hash: "B", dotText: "B*"});
             feature.commit({subject: "D", hash: "D", dotText: "D*"});
-            master.merge(feature);
+            main.merge(feature);
         </script>
 
         <script>  //gitgraph-js code for multiple no-fast-forward merges
@@ -1357,16 +1357,16 @@ website
                 { orientation: "horizontal" }
             );
 
-            master = gitgraph.branch("master");
-            master.commit();
-            feature1 = master.branch("feature1");
+            main = gitgraph.branch("main");
+            main.commit();
+            feature1 = main.branch("feature1");
             feature1.commit();
-            feature2 = master.branch("feature2");
+            feature2 = main.branch("feature2");
             feature2.commit();
             feature1.commit();
-            master.merge(feature1);
+            main.merge(feature1);
             feature2.commit();
-            master.merge(feature2);
+            main.merge(feature2);
         </script>
 
         <script>
@@ -1376,25 +1376,25 @@ website
                 { orientation: "horizontal" }
             );
 
-            master = gitgraph.branch("master");
-            master.commit();
-            feature1 = master.branch("feature1");
+            main = gitgraph.branch("main");
+            main.commit();
+            feature1 = main.branch("feature1");
             feature1.commit();
             feature1.commit();
-            master.merge(feature1);
-            feature2 = master.branch("feature2");
+            main.merge(feature1);
+            feature2 = main.branch("feature2");
             feature2.commit();
             feature2.commit();
-            master.merge(feature2);
+            main.merge(feature2);
         </script>
 
         <script>
             graphContainer = document.getElementById("interactive-rebase-initial-status");
             gitgraph = GitgraphJS.createGitgraph(graphContainer);
 
-            master = gitgraph.branch("master");
-            master.commit("add title");
-            feature1 = master.branch("feature/add-text");
+            main = gitgraph.branch("main");
+            main.commit("add title");
+            feature1 = main.branch("feature/add-text");
             feature1.commit("add some test");
             feature1.commit("fix typo");
         </script>
