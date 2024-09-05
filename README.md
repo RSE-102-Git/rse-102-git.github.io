@@ -1,6 +1,6 @@
 # RSE 102 Workshop
 
-This is a temporary location for the modified slides of the Git part of the **[RSE 102 Workshop](https://github.com/RSE-102)**.
+This is the temporary location for the adjusted slides of the Git part of the **[RSE 102 Workshop](https://github.com/RSE-102)**.
 
 ## Slides
 

@@ -1,3 +1,21 @@
+
+<style>
+    .reveal strong {
+      font-weight: bold;
+      color: orange;
+    }
+    .reveal p {
+      text-align: left;
+    }
+    .reveal section h1 {
+      color: orange;
+    }
+    .reveal section h2 {
+      color: orange;
+    }
+</style>
+
+
 # Git Demo
 
 ---
