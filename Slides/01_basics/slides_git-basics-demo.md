@@ -1,5 +1,9 @@
 
 <style>
+
+    .reveal {
+      font-size: 32px;
+    }    
     .reveal strong {
       font-weight: bold;
       color: orange;
@@ -13,6 +17,7 @@
     .reveal section h2 {
       color: orange;
     }
+
 </style>
 
 
@@ -20,19 +25,33 @@
 
 ---
 
+## Why Version Control?
+
+<img src="https://swcarpentry.github.io/git-novice/fig/phd101212s.png" alt="'notFinal.doc' by Jorge Cham, https://www.phdcomics.com" height="500px"/>
+
+---
+
 ## Recap of Git basics
 
 - Expert level poll on git: ask students to estimate their level.
-    - Beginner: I have hardly ever used Git
-    - User: pull, commit, push, status, diff
-    - Developer: fork, branch, merge, checkout
-    - Maintainer: rebase, squash, cherry-pick, bisect
-    - Owner: submodules
+    - **Beginner:** I have hardly ever used Git
+    - **User:** pull, commit, push, status, diff
+    - **Developer:** fork, branch, merge, checkout
+    - **Maintainer:** rebase, squash, cherry-pick, bisect
+    - **Owner:** submodules
 
-![git overview picture from py-rse](https://merely-useful.tech/py-rse/figures/git-cmdline/git-remote.png)
+---
 
-- `git --help`, `git commit --help`
+<img src="https://third-bit.com/py-rse/figures/git-cmdline/git-remote.png" alt="git overview picture from py-rse"/>
+
+
+---
+
+- `git --help`
+- `git commit --help`
 - incomplete statement `git co`
+
+---
 
 - There is a difference between Git and hosting services ([*forges*](https://en.wikipedia.org/wiki/Forge_(software)))
     - [GitHub](https://github.com/)
@@ -51,14 +70,16 @@
 Starting remarks:
 
 - There is not *the one solution* how to do things with Git. I simply show what I typically use.
-- Don't use a client if you don't understand the command line `git`
+- Don't use a **(GUI) client** if you don't understand the command line `git`
+
+---
 
 - (1) Look at GitHub
     - [preCICE repository](https://github.com/precice/precice)
     - default branch `develop`
     - fork -> my fork
 
---
+---
 
 - (2) Working directory:
     - ZSH shell shows git branches
@@ -71,7 +92,7 @@ Starting remarks:
     - `git branch add-demo-feature`
     - `git checkout add-demo-feature`
 
---
+---
 
 - (3) First commit
     - `git status` -> always tells you what you can do
@@ -81,7 +102,7 @@ Starting remarks:
     - `git commit` -> "Include MagicHeader in Action.hpp"
     - `git status`, `git log`, `git log -p`, `git show`
 
---
+---
 
 - (4) Change or revert things
     - I forgot to add sth: `git reset --soft HEAD~1`, `git status`
@@ -91,14 +112,14 @@ Starting remarks:
     - actually all that is nonsense: `git reset --hard HEAD~1`
     - modify again, all nonsense before committing: `git checkout src/action/Action.hpp`
 
---
+---
 
 - (5) Stash
     - while working on unfinished feature, I need to change / test this other thing quickly, too lazy for commits / branches
     - `git stash`
     - `git stash pop`
 
---
+---
 
 - (6) Create PR
     - create commit again
@@ -110,7 +131,7 @@ Starting remarks:
     - cancel
     - my fork -> branches -> delete
 
---
+---
 
 - (7) Check out someone else's work
     - have a look at an existing PR, look at all tabs, show suggestion feature
@@ -129,10 +150,13 @@ Starting remarks:
 
 - [Video: Git in 15 minutes: basics, branching, no remote](https://www.youtube.com/watch?v=USjZcfj8yxE)
 - [The GitHub Blog: Commits are snapshots, not diffs](https://github.blog/2020-12-17-commits-are-snapshots-not-diffs/)
-- Chapters [6](https://merely-useful.tech/py-rse/git-cmdline.html) and [7](https://merely-useful.tech/py-rse/git-advanced.html) of Research Software Engineering with Python
+- Chapters [6](https://third-bit.com/py-rse/git-cmdline.html) and [7](https://third-bit.com/py-rse/git-advanced.html) of Research Software Engineering with Python
 - [Podcast All Things Git: History of VC](https://www.allthingsgit.com/episodes/the_history_of_vc_with_eric_sink.html)
 - [git purr](https://girliemac.com/blog/2017/12/26/git-purr/)
+
+---
 
 ### References
 
 - [Official documentation](http://git-scm.com/doc)
+
