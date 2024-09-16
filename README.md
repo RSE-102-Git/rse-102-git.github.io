@@ -10,7 +10,7 @@ This is the temporary location for the adjusted slides of the Git part of the **
 
 ## Exercise
 
-- **[Git Workflows](https://rse-102-git.github.io/Exercises/exercise_git-workflows.md)**
+- **[Git Workflows](https://github.com/RSE-102-Git/rse-102-git.github.io/blob/main/Exercises/exercise_git-workflows.md)**
 
 ----
 ### License
